@@ -1,9 +1,11 @@
 {
+  "name": "random-image-api",
   "scripts": {
-    "start": "micro"
+    "start": "./index.js"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
-    "micro": "^7.3.0"
+    "cors": "^2.8.1",
+    "express": "^4.15.2",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
