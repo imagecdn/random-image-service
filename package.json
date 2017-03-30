@@ -1,11 +1,17 @@
 {
   "name": "random-image-api",
+  "author": "Alex Wilson <a@ax.gy>",
+  "license": "ISC",
   "scripts": {
-    "start": "./index.js"
+    "start": "node index",
+    "start-dev": "nodemon index -w src"
   },
   "dependencies": {
     "cors": "^2.8.1",
     "express": "^4.15.2",
     "isomorphic-fetch": "^2.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
