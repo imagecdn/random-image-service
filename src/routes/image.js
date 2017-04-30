@@ -12,7 +12,6 @@ const getQuery = query => ({
 module.exports = function image(req, res, next) {
 
     const query = getQuery(req.query.query)
-    const format = req.format
 
     fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
         .then(res => res.url)
@@ -37,6 +36,9 @@ module.exports = function image(req, res, next) {
                     }
                     res.json(Object.assign(body, {url}))
                     break
+
+                default:
+                    throw new Error('Unexpected Content-Type')
             }
         })
         .catch(err => next(err))
