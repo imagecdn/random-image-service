@@ -1,20 +1,25 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const cors = require('cors')
-const fetch = require('isomorphic-fetch')
+
 const app = express()
-const image = require('./src/image')
-const {_redirect} = require('./src/util')
+const router = express.Router()
+
+const image = require('./src/routes/image')
+const requestFormat = require('./src/middleware/request-format')
 
 app.use(cors())
+app.use(bodyParser.json())
 
-app.get('/v1/image', image)
+app.use(requestFormat())
 
-app.get('/__health', (req, res) => {
+router.get('/v1/image', image)
+router.get('/__health', (req, res) => {
   res.json({status:'OK'})
 })
-
-app.get('/*', (req, res) => {
-  _redirect(res, 'https://responsiveimages.io/')
+router.get('/*', (req, res) => {
+  res.redirect('https://responsiveimages.io/')
 })
 
+app.use(router)
 app.listen(process.env.PORT || 3000)
