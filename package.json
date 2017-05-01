@@ -9,7 +9,7 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "cors": "^2.8.1",
-    "express": "^4.15.2",
+    "express": "5",
     "isomorphic-fetch": "^2.2.1",
     "type-is": "^1.6.15"
   },

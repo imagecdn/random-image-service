@@ -1,5 +1,3 @@
-const is = require('type-is')
-
 // Default options for this middleware.
 const defaultOptions = {
     allowQueryOverride: true
@@ -26,15 +24,14 @@ const getFormatFromQuery = format => {
 
 const getFormatFromRequest = req => {
 
-    // Leverage content-type header for the meantime.
-    req.headers['content-type'] = req.headers['content-type'] || req.headers['accept']
-
     switch (true) {
-        case is(req, ['image/*']) !== false:
+        case req.is('image/*'):
+        case /^image/.test(req.headers.accept):
             return 'image'
             break
 
-        case is(req, ['application/json']) !== false:
+        case req.is('json'):
+        case /^application\/json$/.test(req.headers.accept):
             return 'json'
             break
 
@@ -57,6 +54,7 @@ function requestFormat(options) {
         if (allowQueryOverride && req.query.format) {
             return enrich(getFormatFromQuery(req.query.format))
         }
+        console.log(getFormatFromRequest(req))
         return enrich(getFormatFromRequest(req))
     }
 }
