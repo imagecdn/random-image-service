@@ -7,16 +7,16 @@ const router = express.Router()
 
 const image = require('./routes/image')
 const requestFormat = require('./middleware/request-format')
+const healthcheck = require('./middleware/health-check')
 
 app.use(cors())
 app.use(bodyParser.json())
 
 app.use(requestFormat())
 
+app.use(healthcheck())
+
 router.get('/v1/image', image)
-router.get('/__health', (req, res) => {
-  res.json({status:'OK'})
-})
 router.get('/*', (req, res) => {
   res.redirect('https://responsiveimages.io/')
 })
