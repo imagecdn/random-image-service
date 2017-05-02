@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node index",
     "start-dev": "nodemon index -w src",
-    "test": "ava"
+    "test": "xo && ava"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
@@ -16,14 +16,21 @@
   },
   "devDependencies": {
     "ava": "^0.19.1",
+    "eslint-config-prettier": "^1.7.0",
     "nodemon": "^1.11.0",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "xo": "^0.18.1"
   },
   "ava": {
     "failFast": true,
     "files": [
       "test/*",
       "!test/*fixtures"
+    ]
+  },
+  "xo": {
+    "extends": [
+      "prettier"
     ]
   }
 }
