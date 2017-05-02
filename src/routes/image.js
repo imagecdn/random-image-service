@@ -4,14 +4,14 @@ const fetch = require('isomorphic-fetch')
 const getQuery = query => ({
     category: query.category || 'buildings',
     size: {
-        width: query.size.width || 1920,
-        height: query.size.height || 1200
+        width: query.width || 1920,
+        height: query.height || 1200
     }
 })
 
 function image(req, res, next) {
 
-    const query = getQuery(req.query.query)
+    const query = getQuery(req.query)
     const body = {
         provider: 'unsplash',
         license: 'CC0',
