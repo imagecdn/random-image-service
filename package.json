@@ -4,7 +4,8 @@
   "license": "ISC",
   "scripts": {
     "start": "node index",
-    "start-dev": "nodemon index -w src"
+    "start-dev": "nodemon index -w src",
+    "test": "ava"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
@@ -14,6 +15,15 @@
     "type-is": "^1.6.15"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "ava": "^0.19.1",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
+  },
+  "ava": {
+    "failFast": true,
+    "files": [
+      "test/*",
+      "!test/*fixtures"
+    ]
   }
 }

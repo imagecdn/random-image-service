@@ -25,12 +25,12 @@ const getFormatFromQuery = format => {
 const getFormatFromRequest = req => {
 
     switch (true) {
-        case req.is('image/*'):
+        case !!req.is('image/*'):
         case /^image/.test(req.headers.accept):
             return 'image'
             break
 
-        case req.is('json'):
+        case !!req.is('json'):
         case /^application\/json$/.test(req.headers.accept):
             return 'json'
             break
@@ -54,7 +54,6 @@ function requestFormat(options) {
         if (allowQueryOverride && req.query.format) {
             return enrich(getFormatFromQuery(req.query.format))
         }
-        console.log(getFormatFromRequest(req))
         return enrich(getFormatFromRequest(req))
     }
 }
