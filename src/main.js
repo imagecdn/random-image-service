@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const app = express()
-const router = express.Router()
+const router = new express.Router()
 
 const image = require('./routes/image')
 const requestFormat = require('./middleware/request-format')
@@ -22,7 +22,8 @@ router.get('/*', (req, res) => {
 })
 
 app.use(router)
-const listener = app.listen(process.env.PORT || 3000, _ => {
+const listener = app.listen(process.env.PORT || 3000, err => {
+    if (err) throw err
     const {address,port} = listener.address()
     console.log(`Serving on ${address} ${port}.`)
 })

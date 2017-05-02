@@ -8,32 +8,27 @@ const getFormatFromQuery = format => {
     switch (format) {
         case 'json':
             return 'json'
-            break
 
         case 'txt':
         case 'text':
             return 'text'
-            break
 
         case 'image':
         default:
             return 'image'
-            break
     }
 }
 
 const getFormatFromRequest = req => {
 
     switch (true) {
-        case !!req.is('image/*'):
-        case /^image/.test(req.headers.accept):
+        case Boolean(req.is('image/*')):
+        case req.headers.accept.startsWith('image/'):
             return 'image'
-            break
 
-        case !!req.is('json'):
+        case Boolean(req.is('json')):
         case /^application\/json$/.test(req.headers.accept):
             return 'json'
-            break
 
         default:
             return 'text'
@@ -44,7 +39,7 @@ function requestFormat(options) {
     const config = Object.assign(options || {}, defaultOptions)
     const allowQueryOverride = config.allowQueryOverride
 
-    return function requestFormatMiddleware(req, res, next) {
+    return (req, res, next) => {
 
         const enrich = format => {
             req.format = format

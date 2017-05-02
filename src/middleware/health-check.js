@@ -1,16 +1,23 @@
 const { Router } = require('express')
 
-const defaultOptions = {}
+const defaultOptions = {
+    healthchecks: []
+}
 const model = {
-    status: 'OK'
+    version: 1,
+    healthchecks: [],
+    ok: true
 }
 
 function healthcheck(opts) {
     const options = Object.assign(opts || {}, defaultOptions)
+    const router = new Router()
 
-    return Router().all('/__health', (req, res) => {
-        res.json(Object.assign({}, model))
-    })
+    return router.all('/__health', (req, res) => (
+        Promise.all(options.healthchecks.map(healthcheck))
+            .then(healthchecks => res.json(Object.assign({healthchecks}, model)))
+            .catch(err => res.json(Object.assign(model, {err, ok: false})))
+    ))
 }
 
 module.exports = healthcheck

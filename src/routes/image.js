@@ -2,16 +2,22 @@ const fetch = require('isomorphic-fetch')
 
 // Skeleton Query used for search.
 const getQuery = query => ({
-    category: 'buildings',
+    category: query.category || 'buildings',
     size: {
-        width: 1920,
-        height: 1200
+        width: query.size.width || 1920,
+        height: query.size.height || 1200
     }
 })
 
-module.exports = function image(req, res, next) {
+function image(req, res, next) {
 
     const query = getQuery(req.query.query)
+    const body = {
+        provider: 'unsplash',
+        license: 'CC0',
+        terms: 'https://unsplash.com/terms',
+        url: ''
+    }
 
     fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
         .then(res => res.url)
@@ -28,12 +34,6 @@ module.exports = function image(req, res, next) {
                     break
 
                 case 'json':
-                    const body = {
-                        provider: 'unsplash',
-                        license: 'CC0',
-                        terms: 'https://unsplash.com/terms',
-                        url: ''
-                    }
                     res.json(Object.assign(body, {url}))
                     break
 
@@ -43,3 +43,5 @@ module.exports = function image(req, res, next) {
         })
         .catch(err => next(err))
 }
+
+module.exports = image

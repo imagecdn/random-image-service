@@ -25,12 +25,16 @@
     "failFast": true,
     "files": [
       "test/*",
-      "!test/*fixtures"
+      "test/middleware/*",
+      "!test/*_fixtures"
     ]
   },
   "xo": {
     "extends": [
       "prettier"
+    ],
+    "ignores": [
+      "index.js"
     ]
   }
 }
