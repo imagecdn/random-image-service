@@ -23,7 +23,7 @@ const getFormatFromRequest = req => {
 
     switch (true) {
         case Boolean(req.is('image/*')):
-        case req.headers.accept.startsWith('image/'):
+        case (req.headers.accept||"").startsWith('image/'):
             return 'image'
 
         case Boolean(req.is('json')):
