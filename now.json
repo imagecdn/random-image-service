@@ -1,0 +1,7 @@
+{
+  "name": "random-image-api",
+  "alias": "random.responsiveimages.io",
+  "dotenv": true,
+  "type": "npm"
+}
+
