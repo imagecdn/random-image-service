@@ -11,6 +11,7 @@
     "body-parser": "^1.17.1",
     "cors": "^2.8.1",
     "express": "5",
+    "express-handlebars": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
     "type-is": "^1.6.15"
   },
@@ -34,7 +35,13 @@
       "prettier"
     ],
     "rules": {
-        "no-unused-vars": [2, {"args": "after-used", "argsIgnorePattern": "^_$"}]
+      "no-unused-vars": [
+        2,
+        {
+          "args": "after-used",
+          "argsIgnorePattern": "^_$"
+        }
+      ]
     },
     "ignores": [
       "index.js"
