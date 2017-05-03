@@ -1,0 +1,47 @@
+<h1 class="display-4">Documentation</h1>
+
+<br>
+
+<h3>GET /v1/image</h3>
+<p>Primary endpoint of the Random Image API.</p>
+
+<h4>Query Parameters</h4>
+<table class="table">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <th scope="row"><code>height</code></th>
+    <td><p>
+        Height of the desired image, in pixels.
+    </p></td>
+  </tr>
+  <tr>
+    <th scope="row"><code>width</code></th>
+    <td><p>
+        Width of the desired image, in pixels.
+    </p></td>
+  </tr>
+  <tr>
+    <th scope="row"><code>format</code></th>
+    <td><p>
+        Response format, allows overriding a the <code>Accept</code>
+        or <code>Content-Type</code> header of a request:
+        <dl>
+            <dt>image</dt>
+            <dd>Redirects to the image in question. No attribution information is displayed.</dd>
+            <dt>text</dt>
+            <dd>Returns the full path to the image, hosted by a given provider.  No attribution information is displayed.</dd>
+            <dt>json</dt>
+            <dd>Designed for consumption by 3rd parties, and includes a link to the image as well as licensing and attribution information.</dd>
+        </dl>
+    </p></td>
+  </tr>
+  <tr>
+    <th scope="row"><code>category</code></th>
+    <td><p>
+        Category of the image to be returned. Categories TBC.
+    </p></td>
+  </tr>
+</table>
