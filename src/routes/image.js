@@ -1,47 +1,90 @@
 const fetch = require('isomorphic-fetch')
+const ProgressivePair = require('pson').ProgressivePair
+
+
+const encoder = new ProgressivePair([])
+const nextResponse = new Map()
 
 // Skeleton Query used for search.
+
 const getQuery = query => ({
     category: query.category || 'buildings',
+    bucket: `random-${Math.floor(Math.random()*10)}-v1`,
     size: {
         width: query.width || 1920,
         height: query.height || 1200
     }
 })
 
-function image(req, res, next) {
+const responseBody = {
+    provider: 'unsplash',
+    license: 'CC0',
+    terms: 'https://unsplash.com/terms',
+    url: ''
+}
+const getResponseBodyFromUrl = url => Object.assign(responseBody, {url})
+const getImageFromProvider = query => (
+    fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
+        .then(res => getResponseBodyFromUrl(res.url))
+)
 
-    const query = getQuery(req.query)
-    const body = {
-        provider: 'unsplash',
-        license: 'CC0',
-        terms: 'https://unsplash.com/terms',
-        url: ''
+
+function cachedImageAction(req, res, next) {
+
+    // Define logic for sending a response.
+    const sendResponse = responseBody => {
+
+        // Bail if we've already served this response.
+        if (res.headersSent) return
+
+        // We don't want clients to cache this response.
+        res.setHeader('Cache-Control', 'no-cache')
+        switch (req.format) {
+
+            // Text response is the URL.
+            case 'text':
+                res.send(responseBody.url)
+                break
+
+            // We redirect for images.
+            case 'image':
+            case 'redirect':
+                res.redirect(responseBody.url)
+                break
+
+            // JSON format is the entire response body.
+            case 'json':
+                res.json(responseBody)
+                break
+
+            default:
+                throw new Error('Unexpected Content-Type')
+        }
     }
 
-    fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
-        .then(res => res.url)
-        .then(url => {
-            res.setHeader('Cache-Control', 'no-cache')
-            switch (req.format) {
-                case 'text':
-                    res.send(url)
-                    break
+    // Grab query from request, and generate a hash for caching.
+    const query = getQuery(req.query)
+    const queryHash = encoder.encode(query).toString('binary')
 
-                case 'image':
-                case 'redirect':
-                    res.redirect(url)
-                    break
+    // If we already have a response with this key, send that response.
+    if (nextResponse.has(queryHash)) {
+        sendResponse(nextResponse.get(queryHash))
+        nextResponse.delete(queryHash)
+    }
 
-                case 'json':
-                    res.json(Object.assign(body, {url}))
-                    break
-
-                default:
-                    throw new Error('Unexpected Content-Type')
-            }
+    return getImageFromProvider(query)
+        // If this query is cacheable, store it for a future request.
+        .then(responseBody => {
+            if (req.cacheable !== false) nextResponse.set(queryHash, responseBody)
+            return responseBody
         })
+        .then(sendResponse)
         .catch(err => next(err))
 }
 
-module.exports = image
+function imageAction(res, req, next) {
+    req.cacheable = false
+    return cachedImageAction(res, req, next)
+}
+
+module.exports = {cachedImageAction,imageAction}
