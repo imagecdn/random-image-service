@@ -13,6 +13,7 @@
     "express": "5",
     "express-handlebars": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "pson": "^2.0.0",
     "type-is": "^1.6.15"
   },
   "devDependencies": {
