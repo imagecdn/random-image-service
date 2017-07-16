@@ -7,12 +7,12 @@ const nextResponse = new Map()
 
 // Skeleton Query used for search.
 
-const getQuery = query => ({
-    category: query.category || 'buildings',
+const getQueryFromParams = params => ({
+    category: params.category || 'buildings',
     bucket: `random-${Math.floor(Math.random()*10)}-v1`,
     size: {
-        width: query.width || 1920,
-        height: query.height || 1200
+        width: params.width || 1920,
+        height: params.height || 1200
     }
 })
 
@@ -63,7 +63,8 @@ function cachedImageAction(req, res, next) {
     }
 
     // Grab query from request, and generate a hash for caching.
-    const query = getQuery(req.query)
+    const paramsMergedWithQuery = Object.assign(req.params, req.query)
+    const query = getQueryFromParams(paramsMergedWithQuery)
     const queryHash = encoder.encode(query).toString('binary')
 
     // If we already have a response with this key, send that response.

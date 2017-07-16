@@ -28,6 +28,7 @@ app.use(healthcheck())
 router.get('/', index)
 router.get('/v1/docs', docs)
 router.get('/v1/image', image.cachedImageAction)
+router.get('/i/:height/:width', image.cachedImageAction)
 router.get('/*', (req, res) => {
   res.redirect('/v1/docs')
 })
