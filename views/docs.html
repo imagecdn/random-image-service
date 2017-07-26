@@ -5,6 +5,12 @@
 <h3>GET /v1/image</h3>
 <p>Primary endpoint of the Random Image API.</p>
 
+<h4>Examples</h4>
+<ul>
+  <li><code>https://random.responsiveimages.io/v1/image?width=500&height=150</code></li>
+  <li><code>https://random.responsiveimages.io/v1/image?width=500&height=150&category=buildings&format=json</code></li>
+</ul>
+
 <h4>Query Parameters</h4>
 <table class="table">
   <tr>
@@ -42,6 +48,36 @@
     <th scope="row"><code>category</code></th>
     <td><p>
         Category of the image to be returned. Categories TBC.
+    </p></td>
+  </tr>
+</table>
+
+<br><hr><br>
+
+<h3>GET /{width}/{height}</h3>
+<p>Short-hand endpoint for grabbing an image with a given width and height.</p>
+
+<h4>Examples</h4>
+<ul>
+  <li><code>https://random.responsiveimages.io/500/150</code></li>
+</ul>
+
+<h4>Parameters</h4>
+<table class="table">
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <th scope="row"><code>width</code></th>
+    <td><p>
+        Width of the desired image, in pixels.
+    </p></td>
+  </tr>
+  <tr>
+    <th scope="row"><code>height</code></th>
+    <td><p>
+        Height of the desired image, in pixels.
     </p></td>
   </tr>
 </table>
