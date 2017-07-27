@@ -1,7 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const ProgressivePair = require('pson').ProgressivePair
 
-
 const encoder = new ProgressivePair([])
 const nextResponse = new Map()
 
@@ -37,6 +36,8 @@ function cachedImageAction(req, res, next) {
         // Bail if we've already served this response.
         if (res.headersSent) return
 
+        req.log(JSON.stringify(responseBody))
+
         // We don't want clients to cache this response.
         res.setHeader('Cache-Control', 'no-cache')
         switch (req.format) {
@@ -66,11 +67,13 @@ function cachedImageAction(req, res, next) {
     const paramsMergedWithQuery = Object.assign(req.params, req.query)
     const query = getQueryFromParams(paramsMergedWithQuery)
     const queryHash = encoder.encode(query).toString('binary')
+    req.log(JSON.stringify(query))
 
     // If we already have a response with this key, send that response.
     if (nextResponse.has(queryHash)) {
-        sendResponse(nextResponse.get(queryHash))
+        const response = nextResponse.get(queryHash)
         nextResponse.delete(queryHash)
+        sendResponse(response)
     }
 
     return getImageFromProvider(query)
