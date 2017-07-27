@@ -8,7 +8,7 @@ const nextResponse = new Map()
 
 const getQueryFromParams = params => ({
     category: params.category || 'buildings',
-    bucket: `random-${Math.floor(Math.random()*10)}-v1`,
+    bucket: `random-${Math.floor(Math.random()*4)}-v1`,
     size: {
         width: params.width || 1920,
         height: params.height || 1200
@@ -66,7 +66,7 @@ function cachedImageAction(req, res, next) {
     // Grab query from request, and generate a hash for caching.
     const paramsMergedWithQuery = Object.assign(req.params, req.query)
     const query = getQueryFromParams(paramsMergedWithQuery)
-    const queryHash = encoder.encode(query).toString('binary')
+    const queryHash = encoder.encode(query).toString('hex')
     req.log(JSON.stringify(query))
 
     // If we already have a response with this key, send that response.
