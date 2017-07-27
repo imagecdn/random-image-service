@@ -1,5 +1,5 @@
 const winston = require('winston')
-const {Papertrail} = require('winston-papertrail')
+const {Papertrail} = require('winston-papertrail') // eslint-disable-line no-unused-vars
 
 class Logger extends winston.Logger {
 
