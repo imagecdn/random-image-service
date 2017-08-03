@@ -37,7 +37,7 @@ app.use(router)
 
 router.get('/', index)
 router.get('/v1/docs', docs)
-router.get('/v1/image', image.cachedImageAction)
+router.get('/v1/image', image)
 router.get('/:width(\\d+)/:height(\\d+)', imageShorthand)
 router.get('/*', (req, res) => res.redirect('/v1/docs'))
 

@@ -1,8 +1,6 @@
 const fetch = require('isomorphic-fetch')
-const ProgressivePair = require('pson').ProgressivePair
-
-const encoder = new ProgressivePair([])
-const nextResponse = new Map()
+const msgpack = require('msgpack-lite')
+const cache = require('../cache')
 
 // Skeleton Query used for search.
 class Query {
@@ -39,8 +37,7 @@ const getImageFromProvider = query => (
     }))
 )
 
-
-function cachedImageAction(req, res, next) {
+function imageAction(req, res, next) {
 
     // Define logic for sending a response.
     const sendResponse = responseBody => {
@@ -73,32 +70,41 @@ function cachedImageAction(req, res, next) {
             default:
                 throw new Error('Unexpected Content-Type')
         }
+        return
     }
 
     // Grab query from request, and generate a hash for caching.
     const query = new Query(Object.assign(req.params, req.query))
     req.log(JSON.stringify(query.hash))
 
-    // If we already have a response with this key, send that response.
-    if (nextResponse.has(query.hash)) {
-        const response = nextResponse.get(query.hash)
-        nextResponse.delete(query.hash)
-        sendResponse(response)
+    const log = function() {
+        console.log(arguments)
+        return arguments
     }
 
-    return getImageFromProvider(query)
-        // If this query is cacheable, store it for a future request.
+    // A massive promise chain, so we can access asynch caches.
+    // If we already have a response with this key, send that response.
+    return cache.has(query.hash)
+        .then(_ => cache.get(query.hash))
+        .then(msgpack.decode)
+        .then(sendResponse)
+        .then(_ => cache.delete(query.hash))
+        .catch(_ => req.log('No variation found.'))
+
+        // Perform our Provider callout.
+        .then(_ => getImageFromProvider(query))
         .then(responseBody => {
-            if (req.cacheable !== false) nextResponse.set(query.hash, responseBody)
+            if (req.cacheable !== false) cache.set(query.hash, msgpack.encode(responseBody))
             return responseBody
         })
+
+        // Send response.
         .then(sendResponse)
-        .catch(err => next(err))
+
+        .catch(err => {
+            req.log(err)
+            next(err)
+        })
 }
 
-function imageAction(res, req, next) {
-    req.cacheable = false
-    return cachedImageAction(res, req, next)
-}
-
-module.exports = {cachedImageAction,imageAction}
+module.exports = imageAction
