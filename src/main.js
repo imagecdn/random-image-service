@@ -22,10 +22,14 @@ app.engine('.html', expressHandlebars({
 }))
 app.set('view engine', '.html')
 
-app.use(morgan('dev', {stream: logger.stream}))
 app.use(cors())
 app.use(bodyParser.json())
 app.use(requestId)
+morgan.token('id', req => req.id)
+app.use(morgan('[:id] :remote-addr :method :url', {
+    immediate: true,
+    stream: logger.stream
+}))
 app.use(requestLogger)
 app.use(requestFormat())
 app.use(healthcheck())
