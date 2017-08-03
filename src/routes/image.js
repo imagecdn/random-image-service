@@ -2,11 +2,13 @@ const fetch = require('isomorphic-fetch')
 const msgpack = require('msgpack-lite')
 const cache = require('../cache')
 
+const noop = _ => (undefined)
+
 // Skeleton Query used for search.
 class Query {
     constructor(params) {
         this.category = params.category || 'buildings'
-        this.bucket = `random-${Math.floor(Math.random()*4)}-v1`
+        this.bucket = `random-${Math.floor(Math.random()*10)}-v1`
         this.size = {
             width: params.width || 1920,
             height: params.height || 1200
@@ -89,7 +91,7 @@ function imageAction(req, res, next) {
         .then(msgpack.decode)
         .then(sendResponse)
         .then(_ => cache.delete(query.hash))
-        .catch(_ => req.log('No variation found.'))
+        .catch(noop)
 
         // Perform our Provider callout.
         .then(_ => getImageFromProvider(query))

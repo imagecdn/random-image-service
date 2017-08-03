@@ -4,6 +4,10 @@ class BaseStrategy {
         return false
     }
 
+    static get name() {
+        return 'Base'
+    }
+
     has(key) {
         return new Promise((resolve, reject) => {
             reject(new Error('Not implemented'))

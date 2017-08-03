@@ -8,6 +8,10 @@ class MapStrategy extends BaseStrategy
         return process.env.NODE_ENV !== 'development'
     }
 
+    static get name() {
+        return 'Map'
+    }
+
     constructor() {
         super()
         this.map = new Map()

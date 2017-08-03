@@ -6,6 +6,10 @@ class NoopStrategy extends BaseStrategy
         return true
     }
 
+    static get name() {
+        return 'No-Op'
+    }
+
     has(key) {
         return new Promise((resolve, reject) => reject(false))
     }
