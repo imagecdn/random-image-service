@@ -19,7 +19,7 @@ class MapStrategy extends BaseStrategy
 
     has(key) {
         return new Promise((resolve, reject) =>
-            this.map.has(key) ? resolve(true) : reject(false)
+            this.map.has(key) ? resolve(true) : reject(new Error(false))
         )
     }
     

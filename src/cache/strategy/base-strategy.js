@@ -1,3 +1,5 @@
+const throwError = val => new Error(`Not implemented: ${val}`)
+
 class BaseStrategy {
 
     static isValid() {
@@ -10,25 +12,25 @@ class BaseStrategy {
 
     has(key) {
         return new Promise((resolve, reject) => {
-            reject(new Error('Not implemented'))
+            reject(throwError({key}))
         })
     }
 
     get(key) {
         return new Promise((resolve, reject) => {
-            reject(new Error('Not implemented'))
+            reject(throwError({key}))
         })
     }
 
     set(key, value) {
         return new Promise((resolve, reject) => {
-            reject(new Error('Not implemented'))
+            reject(throwError({key, value}))
         })
     }
 
     delete(key) {
         return new Promise((resolve, reject) => {
-            reject(new Error('Not implemented'))
+            reject(throwError({key}))
         })
     }
 }

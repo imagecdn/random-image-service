@@ -72,17 +72,11 @@ function imageAction(req, res, next) {
             default:
                 throw new Error('Unexpected Content-Type')
         }
-        return
     }
 
     // Grab query from request, and generate a hash for caching.
     const query = new Query(Object.assign(req.params, req.query))
     req.log(JSON.stringify(query.hash))
-
-    const log = function() {
-        console.log(arguments)
-        return arguments
-    }
 
     // A massive promise chain, so we can access asynch caches.
     // If we already have a response with this key, send that response.

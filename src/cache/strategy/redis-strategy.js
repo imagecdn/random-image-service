@@ -1,5 +1,5 @@
-const BaseStrategy = require('./base-strategy')
 const redis = require('redis')
+const BaseStrategy = require('./base-strategy')
 
 /**
  * Promise helper to save duplicated RedisClient code.
@@ -24,7 +24,7 @@ class RedisStrategy extends BaseStrategy
     constructor() {
         super()
         this.redisClient = redis.createClient(process.env.REDIS_URL, {
-            detect_buffers: true
+            'detect_buffers': true
         })
     }
 
@@ -40,7 +40,7 @@ class RedisStrategy extends BaseStrategy
     
     get(key) {
         return new Promise((resolve, reject) => {
-            return this.redisClient.get(new Buffer(key), promiseHelper(resolve, reject))
+            return this.redisClient.get(Buffer.from(key), promiseHelper(resolve, reject))
         })
     }
 
