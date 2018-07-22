@@ -22,10 +22,14 @@ app.engine('.html', expressHandlebars({
 }))
 app.set('view engine', '.html')
 
-app.use(morgan('dev', {stream: logger.stream}))
 app.use(cors())
 app.use(bodyParser.json())
 app.use(requestId)
+morgan.token('id', req => req.id)
+app.use(morgan('[:id] :remote-addr :method :url', {
+    immediate: true,
+    stream: logger.stream
+}))
 app.use(requestLogger)
 app.use(requestFormat())
 app.use(healthcheck())
@@ -33,7 +37,7 @@ app.use(router)
 
 router.get('/', index)
 router.get('/v1/docs', docs)
-router.get('/v1/image', image.cachedImageAction)
+router.get('/v1/image', image)
 router.get('/:width(\\d+)/:height(\\d+)', imageShorthand)
 router.get('/*', (req, res) => res.redirect('/v1/docs'))
 

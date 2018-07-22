@@ -1,42 +1,53 @@
 const fetch = require('isomorphic-fetch')
-const ProgressivePair = require('pson').ProgressivePair
+const msgpack = require('msgpack-lite')
+const cache = require('../cache')
 
-const encoder = new ProgressivePair([])
-const nextResponse = new Map()
+const noop = _ => (undefined)
 
 // Skeleton Query used for search.
-
-const getQueryFromParams = params => ({
-    category: params.category || 'buildings',
-    bucket: `random-${Math.floor(Math.random()*4)}-v1`,
-    size: {
-        width: params.width || 1920,
-        height: params.height || 1200
+class Query {
+    constructor(params) {
+        this.category = params.category || 'buildings'
+        this.bucket = `random-${Math.floor(Math.random()*10)}-v1`
+        this.size = {
+            width: params.width || 1920,
+            height: params.height || 1200
+        }
     }
-})
+
+    get hash() {
+        return `${this.category}-${this.bucket}-${this.size.width}x${this.size.height}`
+    }
+}
 
 const responseBody = {
     provider: 'unsplash',
     license: 'CC0',
     terms: 'https://unsplash.com/terms',
-    url: ''
+    url: '',
+    size: {
+        width: 0,
+        height: 0
+    }
 }
-const getResponseBodyFromUrl = url => Object.assign(responseBody, {url})
+const getResponseBody = res => Object.assign(responseBody, res)
 const getImageFromProvider = query => (
     fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
-        .then(res => getResponseBodyFromUrl(res.url))
+    .then(res => getResponseBody({
+        url: res.url,
+        size: query.size
+    }))
 )
 
-
-function cachedImageAction(req, res, next) {
+function imageAction(req, res, next) {
 
     // Define logic for sending a response.
     const sendResponse = responseBody => {
 
+        req.log(JSON.stringify(responseBody))
+
         // Bail if we've already served this response.
         if (res.headersSent) return
-
-        req.log(JSON.stringify(responseBody))
 
         // We don't want clients to cache this response.
         res.setHeader('Cache-Control', 'no-cache')
@@ -64,31 +75,32 @@ function cachedImageAction(req, res, next) {
     }
 
     // Grab query from request, and generate a hash for caching.
-    const paramsMergedWithQuery = Object.assign(req.params, req.query)
-    const query = getQueryFromParams(paramsMergedWithQuery)
-    const queryHash = encoder.encode(query).toString('hex')
-    req.log(JSON.stringify(query))
+    const query = new Query(Object.assign(req.params, req.query))
+    req.log(JSON.stringify(query.hash))
 
+    // A massive promise chain, so we can access asynch caches.
     // If we already have a response with this key, send that response.
-    if (nextResponse.has(queryHash)) {
-        const response = nextResponse.get(queryHash)
-        nextResponse.delete(queryHash)
-        sendResponse(response)
-    }
+    return cache.has(query.hash)
+        .then(_ => cache.get(query.hash))
+        .then(msgpack.decode)
+        .then(sendResponse)
+        .then(_ => cache.delete(query.hash))
+        .catch(noop)
 
-    return getImageFromProvider(query)
-        // If this query is cacheable, store it for a future request.
+        // Perform our Provider callout.
+        .then(_ => getImageFromProvider(query))
         .then(responseBody => {
-            if (req.cacheable !== false) nextResponse.set(queryHash, responseBody)
+            if (req.cacheable !== false) cache.set(query.hash, msgpack.encode(responseBody))
             return responseBody
         })
+
+        // Send response.
         .then(sendResponse)
-        .catch(err => next(err))
+
+        .catch(err => {
+            req.log(err)
+            next(err)
+        })
 }
 
-function imageAction(res, req, next) {
-    req.cacheable = false
-    return cachedImageAction(res, req, next)
-}
-
-module.exports = {cachedImageAction,imageAction}
+module.exports = imageAction
