@@ -1,0 +1,7 @@
+{
+    "schema": {
+      "type": "string",
+      "description": "A simple URL.",
+      "format": "url"
+    }
+}

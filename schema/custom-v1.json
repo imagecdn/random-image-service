@@ -1,0 +1,69 @@
+{
+  "$id": "http://random.responsiveimages.io/schema/custom-v1.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "version": {
+      "$id": "/properties/version",
+      "type": "integer",
+      "title": "Version of the schema",
+      "default": 0,
+      "examples": [
+        1
+      ]
+    },
+    "pictures": {
+      "$id": "/properties/pictures",
+      "type": "array",
+      "items": {
+        "$id": "/properties/pictures/items",
+        "type": "object",
+        "properties": {
+          "url": {
+            "$id": "/properties/pictures/items/properties/url",
+            "type": "string",
+            "title": "URL to the image.",
+            "default": "",
+            "examples": [
+              "https://example.org/image.jpg"
+            ]
+          },
+          "license": {
+            "$id": "/properties/pictures/items/properties/license",
+            "type": "string",
+            "title": "image license shortcode.",
+            "default": "",
+            "examples": [
+              "MIT"
+            ]
+          },
+          "size": {
+            "$id": "/properties/pictures/items/properties/size",
+            "type": "object",
+            "properties": {
+              "width": {
+                "$id": "/properties/pictures/items/properties/size/properties/width",
+                "type": "integer",
+                "title": "Image Width",
+                "default": 0,
+                "examples": [
+                  1
+                ]
+              },
+              "height": {
+                "$id": "/properties/pictures/items/properties/size/properties/height",
+                "type": "integer",
+                "title": "Image Height",
+                "default": 0,
+                "examples": [
+                  2
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
