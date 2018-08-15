@@ -10,6 +10,10 @@ class Unsplash extends BaseProvider
         this._defaultResponseBody.terms = 'https://unsplash.com/terms'
     }
 
+    static get defaultable() {
+        return true
+    }
+
     randomImage(query) {
         return fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
         .then(res => this._normalizeResponse({
