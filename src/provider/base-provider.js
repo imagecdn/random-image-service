@@ -16,6 +16,10 @@ class BaseProvider {
         this._defaultResponseBody = defaultResponseBody
     }
 
+    static get defaultable() {
+        return false
+    }
+
     _normalizeResponse(res) {
         return Object.assign(this._defaultResponseBody, res)
     }

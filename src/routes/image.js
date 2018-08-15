@@ -1,6 +1,6 @@
 const msgpack = require('msgpack-lite')
 const cache = require('../cache')
-const providers = require('../provider')
+const {providers,defaultableProviders} = require('../provider')
 
 const noop = _ => (undefined)
 
@@ -8,8 +8,8 @@ const noop = _ => (undefined)
 class Query {
     constructor(params) {
         this.category = params.category || 'buildings'
-        this.bucket = `random-${Math.floor(Math.random()*10)}-v1`
-        this.provider = params.provider || 'unsplash'
+        this.bucket = `random-${Math.floor(Math.random()*6)}-v1`
+        this.provider = params.provider || defaultableProviders[Math.floor(Math.random()*defaultableProviders.length)]
         this.size = {
             width: params.width || 1920,
             height: params.height || 1200
