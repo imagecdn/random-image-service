@@ -3,8 +3,8 @@ const fetch = require('isomorphic-fetch')
 
 class Unsplash extends BaseProvider
 {
-    constructor() {
-        super()
+    constructor(provider) {
+        super(provider)
         this._defaultResponseBody.provider = 'unsplash'
         this._defaultResponseBody.license = 'CC0'
         this._defaultResponseBody.terms = 'https://unsplash.com/terms'

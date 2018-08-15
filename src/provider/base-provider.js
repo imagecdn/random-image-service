@@ -1,16 +1,19 @@
+const defaultResponseBody = {
+    provider: '',
+    license: '',
+    terms: '',
+    url: '',
+    size: {
+        width: 0,
+        height: 0
+    }
+}
+
 class BaseProvider {
 
-    constructor() {
-        this._defaultResponseBody = {
-            provider: '',
-            license: '',
-            terms: '',
-            url: '',
-            size: {
-                width: 0,
-                height: 0
-            }
-        }
+    constructor(provider) {
+        this._provider = provider
+        this._defaultResponseBody = defaultResponseBody
     }
 
     _normalizeResponse(res) {

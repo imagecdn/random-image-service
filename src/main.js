@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -33,6 +34,7 @@ app.use(morgan('[:id] :remote-addr :method :url', {
 app.use(requestLogger)
 app.use(requestFormat())
 app.use(healthcheck())
+app.use('/schema/', express.static('schema'))
 app.use(router)
 
 router.get('/', index)
@@ -40,6 +42,7 @@ router.get('/v1/docs', docs)
 router.get('/v1/image', image)
 router.get('/:width(\\d+)/:height(\\d+)', imageShorthand)
 router.get('/*', (req, res) => res.redirect('/v1/docs'))
+
 
 const listener = app.listen(process.env.PORT || 3000, err => {
     if (err) throw err

@@ -22,8 +22,9 @@ class Query {
 }
 
 function getImageFromProvider(query) {
-    if (Object.keys(providers).includes(query.provider)) {
-        const provider = new providers[query.provider](query)
+    const providerName = query.provider.split(':').shift()
+    if (Object.keys(providers).includes(providerName)) {
+        const provider = new providers[providerName](query.provider)
         return provider.randomImage(query)
     }
     throw new Error("Unknown provider.")
