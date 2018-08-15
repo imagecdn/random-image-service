@@ -1,6 +1,6 @@
-const fetch = require('isomorphic-fetch')
 const msgpack = require('msgpack-lite')
 const cache = require('../cache')
+const providers = require('../provider')
 
 const noop = _ => (undefined)
 
@@ -9,6 +9,7 @@ class Query {
     constructor(params) {
         this.category = params.category || 'buildings'
         this.bucket = `random-${Math.floor(Math.random()*10)}-v1`
+        this.provider = params.provider || 'unsplash'
         this.size = {
             width: params.width || 1920,
             height: params.height || 1200
@@ -16,28 +17,17 @@ class Query {
     }
 
     get hash() {
-        return `${this.category}-${this.bucket}-${this.size.width}x${this.size.height}`
+        return `${this.category}-${this.bucket}-${this.provider}-${this.size.width}x${this.size.height}`
     }
 }
 
-const responseBody = {
-    provider: 'unsplash',
-    license: 'CC0',
-    terms: 'https://unsplash.com/terms',
-    url: '',
-    size: {
-        width: 0,
-        height: 0
+function getImageFromProvider(query) {
+    if (Object.keys(providers).includes(query.provider)) {
+        const provider = new providers[query.provider](query)
+        return provider.randomImage(query)
     }
+    throw new Error("Unknown provider.")
 }
-const getResponseBody = res => Object.assign(responseBody, res)
-const getImageFromProvider = query => (
-    fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
-    .then(res => getResponseBody({
-        url: res.url,
-        size: query.size
-    }))
-)
 
 function imageAction(req, res, next) {
 
