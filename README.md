@@ -14,6 +14,7 @@ Contents
 
   - [Requirements](#requirements)
   - [Running Locally](#running-locally)
+  - [Deploying](#deploying)
 
 
 Requirements
@@ -29,3 +30,12 @@ Running Locally
 
 This will spawn a local server on port 3000, which can be accessed at http://localhost:3000/.
 In development mode the service will use a Map as its cache, which simulates the behaviour with Redis used in production.
+
+
+Deploying
+---------
+The production instance of this service runs on Now.sh.  It makes use of environment variables and secrets.
+
+```
+now secret add random-images-redis-url redis://redis-url
+```

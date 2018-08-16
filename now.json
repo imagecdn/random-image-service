@@ -1,7 +1,9 @@
 {
   "name": "random-image-api",
   "alias": "random.responsiveimages.io",
-  "dotenv": true,
+  "env": {
+    "REDIS_URL": "@random-images-redis-url"
+  },
   "type": "npm"
 }
 
