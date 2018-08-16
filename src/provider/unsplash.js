@@ -1,5 +1,5 @@
-const BaseProvider = require('./base-provider')
 const fetch = require('isomorphic-fetch')
+const BaseProvider = require('./base-provider')
 
 class Unsplash extends BaseProvider
 {

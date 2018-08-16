@@ -1,4 +1,3 @@
-const path = require('path')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
