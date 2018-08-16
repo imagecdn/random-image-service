@@ -42,7 +42,17 @@ class CustomV1 extends BaseProvider
     }
 
     imageFromPool(query, pool) {
-        return this._normalizeResponse(pool.pictures[Math.floor(Math.random()*pool.pictures.length)])
+        const image = pool.pictures[Math.floor(Math.random()*pool.pictures.length)]
+        const imageServiceParams = []
+
+        if (query.size) {
+            imageServiceParams.push(`width=${query.size.width}`)
+            imageServiceParams.push(`height=${query.size.height}`)
+            image.size = query.size
+        }
+        image.url = `https://responsiveimages.io/v1/images/${encodeURIComponent(image.url)}?${imageServiceParams.join('&')}`
+
+        return this._normalizeResponse(image)
     }
 }
 
