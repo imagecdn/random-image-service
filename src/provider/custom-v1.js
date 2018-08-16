@@ -1,9 +1,8 @@
-const BaseProvider = require('./base-provider')
+const fetch = require('isomorphic-fetch')
 const Validator = require('jsonschema').Validator
 const CustomV1Schema = require('../../schema/custom-v1.json')
 const UrlSchema = require('../../schema/url.json')
-
-const fetch = require('isomorphic-fetch')
+const BaseProvider = require('./base-provider')
 
 class CustomV1 extends BaseProvider
 {
@@ -27,7 +26,10 @@ class CustomV1 extends BaseProvider
                 }
             })
             .then(res => res.json())
-            .catch(err => { throw new Error("This is not a valid image pool!") })
+            .catch(err => {
+                console.error(err)
+                throw new Error("This is not a valid image pool!") 
+            })
             .then(data => {
                 if (
                     validator.validate(data, CustomV1Schema).valid !== true

@@ -24,8 +24,8 @@ class BaseProvider {
         return Object.assign(this._defaultResponseBody, res)
     }
 
-    randomImage(query) {
-        return new Promise((_, reject) => {
+    randomImage() {
+        return new Promise((resolve, reject) => {
             reject(new Error("Not implemented!"))
         })
     }
