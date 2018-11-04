@@ -13,7 +13,7 @@ class BaseProvider {
 
     constructor(provider) {
         this._provider = provider
-        this._defaultResponseBody = defaultResponseBody
+        this._defaultResponseBody = Object.assign({}, defaultResponseBody)
     }
 
     static get defaultable() {
@@ -21,7 +21,7 @@ class BaseProvider {
     }
 
     _normalizeResponse(res) {
-        return Object.assign(this._defaultResponseBody, res)
+        return Object.assign({}, this._defaultResponseBody, res)
     }
 
     randomImage() {

@@ -15,10 +15,12 @@ class Unsplash extends BaseProvider
     }
 
     randomImage(query) {
-        return fetch(`https://source.unsplash.com/category/${query.category}/${query.size.width}x${query.size.height}`)
+        const height = query.size.height || 1080
+        const width = query.size.width || 1920
+        return fetch(`https://source.unsplash.com/category/${query.category}/${width}x${height}`)
         .then(res => this._normalizeResponse({
             url: res.url,
-            size: query.size
+            size: {height, width}
         }))
     }
 }
