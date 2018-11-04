@@ -11,8 +11,8 @@ class Query {
         this.bucket = `random-${Math.floor(Math.random()*6)}-v1`
         this.provider = params.provider || defaultableProviders[Math.floor(Math.random()*defaultableProviders.length)]
         this.size = {
-            width: params.width || 1920,
-            height: params.height || 1200
+            width: params.width,
+            height: params.height
         }
     }
 
