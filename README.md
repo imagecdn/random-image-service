@@ -1,7 +1,7 @@
 Random Image API
 ================
 
-[![Build status](https://img.shields.io/circleci/project/antoligy/random-image-service.svg)](https://circleci.com/gh/antoligy/random-image-service)
+[![Build status](https://img.shields.io/circleci/project/imagecdn/random-image-service.svg)](https://circleci.com/gh/imagecdn/random-image-service)
 [![ISC licensed](https://img.shields.io/badge/license-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
 A webservice designed to return random images from various providers, given specific criteria. Contributions welcome!
