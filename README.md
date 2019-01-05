@@ -34,7 +34,7 @@ In development mode the service will use a Map as its cache, which simulates the
 
 Deploying
 ---------
-The production instance of this service runs on Now.sh.  It makes use of environment variables and secrets.
+The production instance of this service runs on Kubernetes.
 
 ```
 now secret add random-images-redis-url redis://redis-url

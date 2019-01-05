@@ -52,7 +52,7 @@
       ]
     },
     "ignores": [
-      "index.js"
+      "main.js"
     ]
   }
 }
