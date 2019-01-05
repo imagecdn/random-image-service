@@ -3,8 +3,8 @@
   "author": "Alex Wilson <a@ax.gy>",
   "license": "ISC",
   "scripts": {
-    "start": "node index",
-    "start-dev": "nodemon index -w src",
+    "start": "node main",
+    "start-dev": "nodemon main -w src",
     "test": "xo && ava"
   },
   "dependencies": {
