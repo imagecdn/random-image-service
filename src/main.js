@@ -16,11 +16,17 @@ const logger = require('./util/logger')
 const app = express()
 const router = new express.Router()
 
+const configuration = {
+    port: process.env.PORT || 3000,
+    origin: process.env.ORIGIN || 'https://random.imagecdn.app'
+}
+
 app.engine('.html', expressHandlebars({
     extname: '.html',
     defaultLayout: 'main'
 }))
 app.set('view engine', '.html')
+app.locals.origin = configuration.origin
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -43,7 +49,7 @@ router.get('/:width(\\d+)/:height(\\d+)', imageShorthand)
 router.get('/*', (req, res) => res.redirect('/v1/docs'))
 
 
-const listener = app.listen(process.env.PORT || 3000, err => {
+const listener = app.listen(configuration.port, err => {
     if (err) throw err
     const {address,port} = listener.address()
     logger.info(`Serving on ${address} ${port}.`)
