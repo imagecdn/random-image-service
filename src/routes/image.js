@@ -48,6 +48,7 @@ function imageAction(req, res, next) {
             'no-store',
             'must-revalidate'
         ].join(', '))
+        res.setHeader('Expires', new Date(Date.now() - 1000).toUTCString())
         switch (req.format) {
 
             // Text response is the URL.
