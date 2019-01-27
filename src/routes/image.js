@@ -41,7 +41,13 @@ function imageAction(req, res, next) {
         if (res.headersSent) return
 
         // We don't want clients to cache this response.
-        res.setHeader('Cache-Control', 'no-cache')
+        res.setHeader('Cache-Control', [
+            'private',
+            'max-age=0',
+            'no-cache',
+            'no-store',
+            'must-revalidate'
+        ].join(', '))
         switch (req.format) {
 
             // Text response is the URL.
