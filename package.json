@@ -27,7 +27,7 @@
     "ava": "^0.19.1",
     "eslint-config-prettier": "^1.7.0",
     "nodemon": "^1.11.0",
-    "supertest": "^3.0.0",
+    "supertest": "^4.0.2",
     "xo": "^0.18.1"
   },
   "ava": {
