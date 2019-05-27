@@ -11,7 +11,7 @@
     "body-parser": "^1.17.1",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
-    "express": "v5.0.0-alpha.5",
+    "express": "v5.0.0-alpha.7",
     "express-handlebars": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
     "jsonschema": "^1.2.4",
