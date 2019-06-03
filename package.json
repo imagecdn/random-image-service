@@ -24,7 +24,7 @@
     "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
-    "ava": "^1.4.1",
+    "ava": "^2.0.0",
     "eslint-config-prettier": "^1.7.0",
     "nodemon": "^1.11.0",
     "supertest": "^4.0.2",
