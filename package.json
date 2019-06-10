@@ -20,7 +20,7 @@
     "redis": "^2.7.1",
     "type-is": "^1.6.18",
     "uuid": "^3.1.0",
-    "winston": "^2.3.1",
+    "winston": "^3.2.1",
     "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
