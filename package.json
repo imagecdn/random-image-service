@@ -8,7 +8,7 @@
     "test": "xo && ava"
   },
   "dependencies": {
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
     "express": "v5.0.0-alpha.7",
