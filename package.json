@@ -14,7 +14,7 @@
     "express": "v5.0.0-alpha.7",
     "express-handlebars": "^3.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "jsonschema": "^1.2.4",
+    "jsonschema": "^1.2.5",
     "morgan": "^1.8.2",
     "msgpack-lite": "^0.1.26",
     "redis": "^2.7.1",
