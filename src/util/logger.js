@@ -21,4 +21,8 @@ const logger = createLogger({
     transports: activeTransports
 })
 
+logger.stream = {
+    write: (message) => logger.info(message)
+}
+
 module.exports = logger
