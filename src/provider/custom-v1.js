@@ -47,8 +47,6 @@ class CustomV1 extends BaseProvider
         const image = pool.pictures[Math.floor(Math.random()*pool.pictures.length)]
         const imageServiceParams = []
 
-        image.url = `https://imagecdn.app/v1/images/${encodeURIComponent(image.url)}`
-
         if (query.size) {
             if (query.size.width > 0) imageServiceParams.push(`width=${query.size.width}`)
             if (query.size.height > 0) imageServiceParams.push(`height=${query.size.height}`)
