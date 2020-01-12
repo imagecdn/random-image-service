@@ -1,35 +1,24 @@
-const winston = require('winston')
+const {createLogger, transports} = require('winston')
 const {Papertrail} = require('winston-papertrail') // eslint-disable-line no-unused-vars
 
-class Logger extends winston.Logger {
+const activeTransports = []
+activeTransports.push(new transports.Console({
+    level: 'debug',
+    handleExceptions: true,
+    json: false,
+    colorize: true
+}))
 
-    constructor() {
-        const transports = []
-
-        transports.push(new winston.transports.Console({
-            level: 'debug',
-            handleExceptions: true,
-            json: false,
-            colorize: true
-        }))
-
-        if (process.env.PAPERTRAIL_HOST && process.env.PAPERTRAIL_PORT) {
-            transports.push(new winston.transports.Papertrail({
-                host: process.env.PAPERTRAIL_HOST,
-                port: process.env.PAPERTRAIL_PORT,
-                program: 'random-image-api'
-            }))
-        }
-
-        super({
-            transports,
-            exitOnError: false
-        })
-
-        this.stream = {
-            write: message => this.info(message.trim('\n'))
-        }
-    }
+if (process.env.PAPERTRAIL_HOST && process.env.PAPERTRAIL_PORT) {
+    activeTransports.push(new transports.Papertrail({
+        host: process.env.PAPERTRAIL_HOST,
+        port: process.env.PAPERTRAIL_PORT,
+        program: 'random-image-api'
+    }))
 }
 
-module.exports = new Logger()
+const logger = createLogger({
+    transports: activeTransports
+})
+
+module.exports = logger
