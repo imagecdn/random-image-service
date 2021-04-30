@@ -17,7 +17,7 @@
     "jsonschema": "^1.2.5",
     "morgan": "^1.8.2",
     "msgpack-lite": "^0.1.26",
-    "redis": "^2.7.1",
+    "redis": "^3.1.1",
     "type-is": "^1.6.18",
     "uuid": "^3.3.3",
     "winston": "^3.2.1",
