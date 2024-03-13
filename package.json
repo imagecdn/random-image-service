@@ -13,7 +13,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "express-handlebars": "^7.1.2",
-    "isomorphic-fetch": "^3.0.0",
     "jsonschema": "^1.4.1",
     "morgan": "^1.10.0",
     "msgpack-lite": "^0.1.26",
@@ -32,10 +31,16 @@
   },
   "ava": {
     "failFast": true,
-    "files": ["test/*", "test/middleware/*", "!test/*_fixtures"]
+    "files": [
+      "test/*",
+      "test/middleware/*",
+      "!test/*_fixtures"
+    ]
   },
   "xo": {
-    "extends": ["prettier"],
+    "extends": [
+      "prettier"
+    ],
     "rules": {
       "no-unused-vars": [
         2,
@@ -45,7 +50,9 @@
         }
       ]
     },
-    "ignores": ["main.js"]
+    "ignores": [
+      "main.js"
+    ]
   },
   "volta": {
     "node": "20.11.1"
