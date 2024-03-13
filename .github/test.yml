@@ -1,0 +1,34 @@
+name: "Test"
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v4
+
+      - uses: actions/cache/restore@v3
+        with:
+          key: npm-dependency-cache-${{hashfiles(package-lock.json)}}
+          path: ./node_modules
+
+      - run:
+          name: Install Dependencies
+          command: |
+            npm ci
+
+      - uses: actions/cache/save@v3
+        with:
+          key: npm-dependency-cache-${{hashfiles(package-lock.json)}}
+          path: ./node_modules
+          if: always()
+
+      - run:
+          name: Run Tests
+          command: |
+            npm run test
