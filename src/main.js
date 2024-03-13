@@ -1,5 +1,5 @@
 const express = require('express')
-const expressHandlebars = require('express-handlebars')
+const { engine: expressHandlebars } = require('express-handlebars')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
