@@ -1,9 +1,0 @@
-{
-  "name": "random-image-api",
-  "alias": "random.responsiveimages.io",
-  "env": {
-    "REDIS_URL": "@random-images-redis-url"
-  },
-  "type": "npm"
-}
-

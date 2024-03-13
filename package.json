@@ -1,6 +1,6 @@
 {
   "name": "random-image-api",
-  "author": "Alex Wilson <a@ax.gy>",
+  "author": "Alex Wilson <alex@alexwilson.tech>",
   "license": "ISC",
   "scripts": {
     "start": "node main",
@@ -8,40 +8,34 @@
     "test": "xo && ava"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.1",
-    "dotenv": "^8.2.0",
-    "express": "v5.0.0-alpha.7",
-    "express-handlebars": "^3.1.0",
-    "isomorphic-fetch": "^2.2.1",
-    "jsonschema": "^1.2.5",
-    "morgan": "^1.8.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "express-handlebars": "^7.1.2",
+    "isomorphic-fetch": "^3.0.0",
+    "jsonschema": "^1.4.1",
+    "morgan": "^1.10.0",
     "msgpack-lite": "^0.1.26",
-    "redis": "^2.7.1",
+    "redis": "^4.6.13",
     "type-is": "^1.6.18",
-    "uuid": "^3.3.3",
-    "winston": "^3.2.1",
+    "uuid": "^9.0.1",
+    "winston": "^3.12.0",
     "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
-    "ava": "^2.0.0",
-    "eslint-config-prettier": "^4.3.0",
-    "nodemon": "^1.11.0",
-    "supertest": "^4.0.2",
-    "xo": "^0.18.1"
+    "ava": "^6.1.2",
+    "eslint-config-prettier": "^9.1.0",
+    "nodemon": "^3.1.0",
+    "supertest": "^6.3.4",
+    "xo": "^0.58.0"
   },
   "ava": {
     "failFast": true,
-    "files": [
-      "test/*",
-      "test/middleware/*",
-      "!test/*_fixtures"
-    ]
+    "files": ["test/*", "test/middleware/*", "!test/*_fixtures"]
   },
   "xo": {
-    "extends": [
-      "prettier"
-    ],
+    "extends": ["prettier"],
     "rules": {
       "no-unused-vars": [
         2,
@@ -51,8 +45,9 @@
         }
       ]
     },
-    "ignores": [
-      "main.js"
-    ]
+    "ignores": ["main.js"]
+  },
+  "volta": {
+    "node": "20.11.1"
   }
 }
