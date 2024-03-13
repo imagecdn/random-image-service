@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node main",
     "start-dev": "nodemon main -w src",
-    "test": "xo && ava"
+    "test": "ava"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -26,8 +26,7 @@
     "ava": "^6.1.2",
     "eslint-config-prettier": "^9.1.0",
     "nodemon": "^3.1.0",
-    "supertest": "^6.3.4",
-    "xo": "^0.58.0"
+    "supertest": "^6.3.4"
   },
   "ava": {
     "failFast": true,
@@ -35,23 +34,6 @@
       "test/*",
       "test/middleware/*",
       "!test/*_fixtures"
-    ]
-  },
-  "xo": {
-    "extends": [
-      "prettier"
-    ],
-    "rules": {
-      "no-unused-vars": [
-        2,
-        {
-          "args": "after-used",
-          "argsIgnorePattern": "^_$"
-        }
-      ]
-    },
-    "ignores": [
-      "main.js"
     ]
   },
   "volta": {
