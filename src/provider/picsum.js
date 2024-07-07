@@ -1,23 +1,21 @@
 const BaseProvider = require("./base-provider");
 
-class Unsplash extends BaseProvider {
+class Picsum extends BaseProvider {
   constructor(provider) {
     super(provider);
-    this._defaultResponseBody.provider = "unsplash";
+    this._defaultResponseBody.provider = "LoremPicsum";
     this._defaultResponseBody.license = "CC0";
-    this._defaultResponseBody.terms = "https://unsplash.com/terms";
+    this._defaultResponseBody.terms = "https://picsum.photos/";
   }
 
   static get defaultable() {
-    return false;
+    return true;
   }
 
   randomImage(query) {
     const height = query.size.height || 1080;
     const width = query.size.width || 1920;
-    return fetch(
-      `https://source.unsplash.com/category/${query.category}/${width}x${height}`,
-    ).then((res) =>
+    return fetch(`https://picsum.photos/${width}/${height}`).then((res) =>
       this._normalizeResponse({
         url: res.url,
         size: { height, width },
@@ -26,4 +24,4 @@ class Unsplash extends BaseProvider {
   }
 }
 
-module.exports = Unsplash;
+module.exports = Picsum;

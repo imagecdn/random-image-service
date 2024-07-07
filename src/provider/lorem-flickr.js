@@ -1,22 +1,22 @@
 const BaseProvider = require("./base-provider");
 
-class Unsplash extends BaseProvider {
+class LoremFlickr extends BaseProvider {
   constructor(provider) {
     super(provider);
-    this._defaultResponseBody.provider = "unsplash";
-    this._defaultResponseBody.license = "CC0";
-    this._defaultResponseBody.terms = "https://unsplash.com/terms";
+    this._defaultResponseBody.provider = "LoremFlickr";
+    this._defaultResponseBody.license = "Creative Commons";
+    this._defaultResponseBody.terms = "https://loremflickr.com/";
   }
 
   static get defaultable() {
-    return false;
+    return true;
   }
 
   randomImage(query) {
     const height = query.size.height || 1080;
     const width = query.size.width || 1920;
     return fetch(
-      `https://source.unsplash.com/category/${query.category}/${width}x${height}`,
+      `https://loremflickr.com/${width}/${height}/${query.category}`,
     ).then((res) =>
       this._normalizeResponse({
         url: res.url,
@@ -26,4 +26,4 @@ class Unsplash extends BaseProvider {
   }
 }
 
-module.exports = Unsplash;
+module.exports = LoremFlickr;
