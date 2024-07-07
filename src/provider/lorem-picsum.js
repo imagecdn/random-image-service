@@ -1,6 +1,6 @@
 const BaseProvider = require("./base-provider");
 
-class Picsum extends BaseProvider {
+class LoremPicsum extends BaseProvider {
   constructor(provider) {
     super(provider);
     this._defaultResponseBody.provider = "LoremPicsum";
@@ -24,4 +24,4 @@ class Picsum extends BaseProvider {
   }
 }
 
-module.exports = Picsum;
+module.exports = LoremPicsum;

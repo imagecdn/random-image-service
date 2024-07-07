@@ -2,7 +2,7 @@ const providers = {
   "custom-v1": require("./custom-v1"),
   s3: require("./s3"),
   "lorem-flickr": require("./lorem-flickr"),
-  picsum: require("./picsum"),
+  picsum: require("./lorem-picsum"),
   unsplash: require("./unsplash"),
 };
 

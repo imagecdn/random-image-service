@@ -49,8 +49,12 @@
     <td><p>
         Select an image provider:
         <dl>
+            <dt>LoremPixel</dt>
+            <dd>A default provider, returning images from before Unsplash launched an API. Note: <a href="https://github.com/DMarby/picsum-photos/issues/81">Does not support categories</a>.</dd>
+            <dt>LoremFlickr</dt>
+            <dd>A default provider, returning images from Flickr. Supports categories.</dd>
             <dt>unsplash</dt>
-            <dd>The current default. Queries the Unsplash API for random images.</dd>
+            <dd>The previous default, however the API it relied on has been shut down. This will be removed eventually, LoremPixel is the best replacement.</dd>
             <dt>custom-v1:<pre>[ABSOLUTE-URL]</pre></dt>
             <dd><strong>EXPERIMENTAL!</strong> Allows parsing a custom Image Pool, adhering to v1 of <a href="/schema/custom-v1.json">this JSON schema</a>.</dd>
         </dl>
@@ -59,7 +63,7 @@
   <tr>
     <th scope="row"><code>category</code></th>
     <td><p>
-        Category of the image to be returned. Categories TBC.
+        Category of the image to be returned. Categories are provider-specific, the default is "buildings".
     </p></td>
   </tr>
 </table>
